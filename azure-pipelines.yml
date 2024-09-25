@@ -4,13 +4,25 @@ variables:
 steps:
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
+
 - task: DotNetCoreCLI@2
   inputs:
     command: 'publish'
     publishWebProjects: true
-- task: AzureWebApp@1
+- task: JFrogGenericArtifacts@1
   inputs:
-    azureSubscription: 'Azure subscription 1'
-    appType: 'webAppLinux'
-    appName: 'SampleNetApp'
-    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    command: 'Upload'
+    connection: 'Jfrog-Azure'
+    specSource: 'taskConfiguration'
+    fileSpec: |
+      {
+        "files": [
+          {
+            "pattern": "$(System.DefaultWorkingDirectory)/**/*.zip",
+            "target": "demoapp-nuget-local/"
+          }
+        ]
+      }
+    failNoOp: true
+
+
