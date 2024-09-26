@@ -9,11 +9,10 @@ steps:
   inputs:
     command: 'publish'
     publishWebProjects: true
-
 - task: JFrogGenericArtifacts@1
   inputs:
     command: 'Upload'
-    connection: 'Jfrog_Azure'
+    connection: 'Jfrog-Azure'
     specSource: 'taskConfiguration'
     fileSpec: |
       {
@@ -24,10 +23,7 @@ steps:
           }
         ]
       }
-    failNoOp: true"
-          }
-        ]
-      }
-    
+    failNoOp: true
+ 
 
 
